@@ -1,10 +1,11 @@
 class Solution {
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
-        set<int> s(nums.begin(), nums.end());
-        vector<int> A(s.begin(),s.end());
         
-        long n = A.size();
+        sort(nums.begin(),nums.end());
+        
+        set<vector<int> > ans;
+        long n = nums.size();
         
         vector<vector<int> > res;
         for(long i = 0; i < pow(2,n); i++){
@@ -12,12 +13,14 @@ public:
             vector<int> temp;
             for(long j = 0; j < n; j++){
                 if(i & (1 << j) ){
-                    temp.push_back(A[j]);
+                    temp.push_back(nums[j]);
                 }
             }
-            res.push_back(temp);
+            if(ans.find(temp) == ans.end()){
+                res.push_back(temp);
+            }
+            ans.insert(temp);
         }
-        
         return res;
         
     }
